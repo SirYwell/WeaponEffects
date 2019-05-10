@@ -7,9 +7,11 @@ import de.sirywell.weaponeffects.handler.EffectHandler;
 import de.sirywell.weaponeffects.handler.EfficientEffectHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
@@ -19,14 +21,17 @@ import java.util.stream.Collectors;
 
 public class WeaponEffects extends JavaPlugin {
     private static final int TICKS_PER_SECOND = 20;
+    private static final String MESSAGES_FILE_NAME = "messages.yml";
     private EffectHandler effectHandler;
     private BukkitTask weaponEffectBukkitTask;
+    private Messages messages;
 
     @Override
     public void onEnable() {
         loadEffectHandler();
         setupCommands();
         startTask();
+        initMessages();
     }
 
     @Override
@@ -35,9 +40,14 @@ public class WeaponEffects extends JavaPlugin {
         stopTask();
     }
 
+    private void initMessages() {
+        File file = new File(getDataFolder(), MESSAGES_FILE_NAME);
+        messages = new Messages(YamlConfiguration.loadConfiguration(file));
+    }
+
     private void setupCommands() {
         PaperCommandManager manager = new PaperCommandManager(this);
-        manager.registerCommand(new WeaponEffectsCommand(effectHandler));
+        manager.registerCommand(new WeaponEffectsCommand(effectHandler, messages));
     }
 
     private void loadEffectHandler() {
