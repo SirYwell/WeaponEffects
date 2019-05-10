@@ -51,6 +51,7 @@ public class WeaponEffects extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveResource(MESSAGES_FILE_NAME, false);
         loadEffectHandler();
         setupCommands();
         startTask();
