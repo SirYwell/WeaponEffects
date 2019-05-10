@@ -93,7 +93,7 @@ public class EfficientEffectHandler implements EffectHandler<EfficientEffect> {
     }
 
     @Override
-    public Set<WeaponEffect> getEffects(ItemStack stack) {
+    public Set<EfficientEffect> getEffects(ItemStack stack) {
         NBTItem item = new NBTItem(stack);
         if (!item.hasKey(WEAPON_EFFECTS_ARRAY)) {
             return Collections.emptySet();

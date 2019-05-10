@@ -70,5 +70,5 @@ public interface EffectHandler<W extends WeaponEffect> {
      * @param stack the stack to get all effects from.
      * @return a set of all attached effects. May be empty.
      */
-    Set<WeaponEffect> getEffects(ItemStack stack);
+    Set<W> getEffects(ItemStack stack);
 }
