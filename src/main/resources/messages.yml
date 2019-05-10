@@ -10,3 +10,4 @@ show:
   no-effects-error: '&3No effects on this item for now!'
 
 no-item-in-hand: '&3You need to hold an item in your main hand.'
+help: '&aUse &6/weaponeffects <add|remove|show> &afor further information.'
