@@ -1,0 +1,5 @@
+# The plugin will apply the effects each x seconds to the players.
+refresh-rate: 10
+# A list of all materials which should be checked for weapon effects.
+# If no items are defined, everything will be checked. This might be slower.
+applicable-items: []
