@@ -19,3 +19,7 @@ This helps to keep the plugin compatible with different versions.
 Internally, the plugin uses Aikar's 
 [Annotation Command Framework](https://www.spigotmc.org/threads/acf-beta-annotation-command-framework.234266/) to handle
 commands in a smooth and intelligent way.
+
+#### License
+
+This plugin is licensed under the terms of the MIT License.
