@@ -16,15 +16,38 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class WeaponEffects extends JavaPlugin {
     private static final int TICKS_PER_SECOND = 20;
     private static final String MESSAGES_FILE_NAME = "messages.yml";
+    private static final Function<String, Material> STRING_TO_MATERIAL_CONVERTER;
+    private static final Predicate<Material> ITEM_FILTER;
     private EffectHandler effectHandler;
     private BukkitTask weaponEffectBukkitTask;
     private Messages messages;
+
+    static {
+        STRING_TO_MATERIAL_CONVERTER = matName -> {
+            Material mat = Material.getMaterial(matName);
+            if (mat == null) {
+                Bukkit.getLogger().warning(
+                        String.format("No material with name %s found. Ignoring it.", matName));
+            }
+            return mat;
+        };
+        ITEM_FILTER = material -> {
+            if (!material.isItem()) {
+                Bukkit.getLogger().warning(
+                        String.format("%s is not an item. Ignoring it.", material.name()));
+                return false;
+            }
+            return true;
+        };
+    }
 
     @Override
     public void onEnable() {
@@ -61,23 +84,9 @@ public class WeaponEffects extends JavaPlugin {
                     .collect(Collectors.toCollection(enumSetSupplier));
         } else {
             items = applicable.stream()
-                    .map(matName -> {
-                        Material mat = Material.getMaterial(matName);
-                        if (mat == null) {
-                            Bukkit.getLogger().warning(
-                                    String.format("No material with name %s found. Ignoring it.", matName));
-                        }
-                        return mat;
-                    })
+                    .map(STRING_TO_MATERIAL_CONVERTER)
                     .filter(Objects::nonNull)
-                    .filter(material -> {
-                        if (!material.isItem()) {
-                            Bukkit.getLogger().warning(
-                                    String.format("%s is not an item. Ignoring it.", material.name()));
-                            return false;
-                        }
-                        return true;
-                    })
+                    .filter(ITEM_FILTER)
                     .collect(Collectors.toCollection(enumSetSupplier));
         }
         effectHandler = new EfficientEffectHandler(items);
