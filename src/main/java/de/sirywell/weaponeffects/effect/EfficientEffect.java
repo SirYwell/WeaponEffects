@@ -3,7 +3,6 @@ package de.sirywell.weaponeffects.effect;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.potion.PotionEffect;
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
