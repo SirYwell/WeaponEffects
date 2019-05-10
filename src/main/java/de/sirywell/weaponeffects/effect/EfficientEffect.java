@@ -48,21 +48,42 @@ public class EfficientEffect implements WeaponEffect {
     @Override
     public Optional<PotionEffect> toPotionEffect() {
         try {
-            return Optional.of(cache.get(bitEffect, () -> {
-                Optional<WeaponEffectType> type = WeaponEffectType.getById(bitEffect & POTION_ID_BITMASK);
-                if (!type.isPresent()) {
-                    return null;
-                }
-                byte amplifier = (byte) (bitEffect >> 8);
-                boolean ambient = booleanFromInt(bitEffect >> 16 & 1);
-                boolean particles = booleanFromInt(bitEffect >> 17 & 1);
-                boolean icon = booleanFromInt(bitEffect >> 18 & 1);
-                int duration = bitEffect >>> 20;
-                return new PotionEffect(type.get().getBukkitType(), duration, amplifier,ambient, particles);
-            }));
+            return Optional.of(cache.get(bitEffect, () -> new PotionEffect(getType().getBukkitType(),
+                    getDuration(), getAmplifier(), hasAmbient(), hasParticles())));
         } catch (ExecutionException ignore) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public WeaponEffectType getType() {
+        return WeaponEffectType.getById(bitEffect & POTION_ID_BITMASK)
+                .orElseThrow(() -> new IllegalStateException("invalid effect type."));
+    }
+
+    @Override
+    public int getDuration() {
+        return bitEffect >>> 20;
+    }
+
+    @Override
+    public byte getAmplifier() {
+        return (byte) (bitEffect >> 8);
+    }
+
+    @Override
+    public boolean hasAmbient() {
+        return booleanFromInt(bitEffect >> 16 & 1);
+    }
+
+    @Override
+    public boolean hasParticles() {
+        return booleanFromInt(bitEffect >> 17 & 1);
+    }
+
+    @Override
+    public boolean hasIcon() {
+        return booleanFromInt(bitEffect >> 18 & 1);
     }
 
     private int intFromBoolean(boolean b) {
