@@ -1,7 +1,6 @@
 package de.sirywell.weaponeffects.handler;
 
 import de.sirywell.weaponeffects.effect.EfficientEffect;
-import de.sirywell.weaponeffects.effect.WeaponEffect;
 import de.sirywell.weaponeffects.effect.WeaponEffectType;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Material;
