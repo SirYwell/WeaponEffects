@@ -42,25 +42,16 @@ public class EfficientEffectHandler implements EffectHandler<EfficientEffect> {
 
     @Override
     public ItemStack addEffect(EfficientEffect effect, ItemStack stack) {
-        System.out.println(stack);
         NBTItem item = new NBTItem(stack);
         if (!item.hasKey(WEAPON_EFFECTS_ARRAY)) {
-            System.out.println("First one");
             int[] updated = new int[]{effect.getInt()};
             item.setIntArray(WEAPON_EFFECTS_ARRAY, updated);
             return item.getItem();
         }
         int[] old = item.getIntArray(WEAPON_EFFECTS_ARRAY);
-        System.out.println("length " + old.length);
-        System.out.println(Arrays.toString(old));
         Set<Integer> asSet = Arrays.stream(old).boxed().collect(Collectors.toCollection(HashSet::new));
         int potionId = effect.getInt() & EfficientEffect.POTION_ID_BITMASK;
-        if (asSet.stream().noneMatch(integer -> {
-            System.out.println("field " + (integer & EfficientEffect.POTION_ID_BITMASK));
-            System.out.println("id " + potionId);
-            return (integer & EfficientEffect.POTION_ID_BITMASK) == potionId;
-        })) {
-            System.out.println("mod req for " + effect.getInt());
+        if (asSet.stream().noneMatch(integer -> (integer & EfficientEffect.POTION_ID_BITMASK) == potionId)) {
             asSet.add(effect.getInt());
             int[] updated = asSet.stream().mapToInt(Integer::intValue).toArray();
             item.setIntArray(WEAPON_EFFECTS_ARRAY, updated);

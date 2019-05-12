@@ -1,5 +1,6 @@
 package de.sirywell.weaponeffects;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public enum ConfigConstant {
@@ -13,6 +14,11 @@ public enum ConfigConstant {
     }
 
     public <T> T fromConfig(FileConfiguration configuration) {
-        return (T) configuration.get(path);
+        try {
+            return (T) configuration.get(path);
+        } catch (ClassCastException e) {
+            Bukkit.getLogger().warning("Trying to read invalid type from config: " + path);
+            return null;
+        }
     }
 }
