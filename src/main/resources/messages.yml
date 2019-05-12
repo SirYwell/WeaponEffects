@@ -1,0 +1,15 @@
+add:
+  success: '&aAdded effect &6{0} &awith duration &6{1}s &aand amplifier &6{2}&a. Particles: &6{3}&a. Ambient: &6{4}&a.'
+  already-added: '&3This effect type is already added to that item.'
+remove:
+  success: '&aRemoved effect &6{0} &asuccessfully.'
+  effect-not-found: '&3No effect with the name {0} found on this item'
+remove-all:
+  success: '&aRemoved all effects &asuccessfully.'
+show:
+  header: '&aFollowing effects are bound to the item:'
+  line: '&d - &aEffect: &6{0} &awith duration &6{1}&a. Amplifier: &6{2}&a. Particles: &6{3}&a. Ambient: &6{4}&a.'
+  no-effects-error: '&3No effects on this item for now!'
+
+no-item-in-hand: '&3You need to hold an item in your main hand.'
+help: '&aUse &6/weaponeffects <add|remove|show> &afor further information.'

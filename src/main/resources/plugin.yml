@@ -1,0 +1,6 @@
+name: WeaponEffects
+version: 0.0.1
+author: SirYwell
+api-version: 1.13
+main: de.sirywell.weaponeffects.WeaponEffects
+
