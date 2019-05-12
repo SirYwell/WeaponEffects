@@ -46,7 +46,7 @@ public interface EffectHandler<W extends WeaponEffect> {
      * @see #addEffect(WeaponEffect, ItemStack)
      */
     ItemStack addEffect(WeaponEffectType type, byte amplifier, int duration,
-                      boolean ambient, boolean particles, boolean icon, ItemStack stack);
+                        boolean ambient, boolean particles, boolean icon, ItemStack stack);
 
     /**
      * Remove an effect of a weapon. Since the uniqueness is determined by

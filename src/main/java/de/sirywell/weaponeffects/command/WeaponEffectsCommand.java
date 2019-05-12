@@ -53,7 +53,6 @@ public class WeaponEffectsCommand extends BaseCommand {
         if (amplifier > Byte.MAX_VALUE) {
             // TODO warn/error
         }
-        System.out.println("effect " + type.name());
         ItemStack result = effectHandler.addEffect(type, (byte) amplifier, duration, ambient, particles, icon,
                 player.getInventory().getItemInMainHand());
         boolean success = player.getInventory().getItemInMainHand() != result;
