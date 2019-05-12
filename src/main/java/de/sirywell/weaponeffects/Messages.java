@@ -25,7 +25,9 @@ public class Messages {
 
     private void loadMessages(FileConfiguration messages) {
         for (String key : messages.getKeys(true)) {
-            cache.put(key, ChatColor.translateAlternateColorCodes('&', messages.getString(key)));
+            if (messages.isString(key)) {
+                cache.put(key, ChatColor.translateAlternateColorCodes('&', messages.getString(key)));
+            }
         }
     }
 }
