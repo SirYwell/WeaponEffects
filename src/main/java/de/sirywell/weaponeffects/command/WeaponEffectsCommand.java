@@ -60,8 +60,38 @@ public class WeaponEffectsCommand extends BaseCommand {
             player.getInventory().setItemInMainHand(result);
             player.sendMessage(messages.getFormattedMessage("add.success",
                     type, duration, amplifier, particles, ambient));
+        } else {
+            player.sendMessage(messages.getFormattedMessage("add.already-added", type));
         }
-        // TODO send message on fail
+    }
+
+    @Subcommand("remove")
+    public void removeFfect(Player player, WeaponEffectType type) {
+        if (!hasValidItem(player)) {
+            return;
+        }
+        ItemStack result = effectHandler.removeEffect(type, player.getInventory().getItemInMainHand());
+        boolean success = player.getInventory().getItemInMainHand() != result;
+        if (success) {
+            player.getInventory().setItemInMainHand(result);
+            player.sendMessage(messages.getFormattedMessage("remove.success", type));
+        }
+    }
+
+    @Subcommand("removeAll")
+    public void removeAllEffects(Player player) {
+        if (!hasValidItem(player)) {
+            return;
+        }
+        ItemStack result = player.getInventory().getItemInMainHand();
+        for (WeaponEffect effect : effectHandler.getEffects(result)) {
+            result = effectHandler.removeEffect(effect.getType(), result);
+        }
+        boolean success = player.getInventory().getItemInMainHand() != result;
+        if (success) {
+            player.getInventory().setItemInMainHand(result);
+            player.sendMessage(messages.getFormattedMessage("remove-all.success"));
+        }
     }
 
     private boolean hasValidItem(Player player) {

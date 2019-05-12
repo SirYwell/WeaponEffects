@@ -4,6 +4,8 @@ add:
 remove:
   success: '&aRemoved effect &6{0} &asuccessfully.'
   effect-not-found: '&3No effect with the name {0} found on this item'
+remove-all: '&aRemoved all effects &asuccessfully.'
+  success:
 show:
   header: '&aFollowing effects are bound to the item:'
   line: '&d - &aEffect: &6{0} &awith duration &6{1}&a. Amplifier: &6{2}&a. Particles: &6{3}&a. Ambient: &6{4}&a.'
