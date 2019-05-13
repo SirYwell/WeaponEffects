@@ -3,3 +3,10 @@ refresh-rate: 10
 # A list of all materials which should be checked for weapon effects.
 # If no items are defined, everything will be checked. This might be slower.
 applicable-items: []
+# define further inventory slots for effect items.
+additional-slots:
+  - 40 # off hand
+  - 39 # helmet
+  - 38 # chest
+  - 37 # leggings
+  - 36 # boots

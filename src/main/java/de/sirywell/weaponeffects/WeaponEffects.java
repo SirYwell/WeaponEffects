@@ -10,6 +10,7 @@ import de.sirywell.weaponeffects.effect.EfficientEffect;
 import de.sirywell.weaponeffects.effect.WeaponEffectType;
 import de.sirywell.weaponeffects.handler.EffectHandler;
 import de.sirywell.weaponeffects.handler.EfficientEffectHandler;
+import de.sirywell.weaponeffects.listener.ItemChangeListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -62,6 +63,8 @@ public class WeaponEffects extends JavaPlugin {
         initMessages();
         setupCommands();
         saveDefaultConfig();
+
+        Bukkit.getPluginManager().registerEvents(new ItemChangeListener(effectHandler), this);
     }
 
     @Override
@@ -112,7 +115,8 @@ public class WeaponEffects extends JavaPlugin {
                     .filter(ITEM_FILTER)
                     .collect(Collectors.toCollection(enumSetSupplier));
         }
-        effectHandler = new EfficientEffectHandler(items);
+        List<Integer> additionalSlotsToCheck = ConfigConstant.ADDITIONAL_SLOTS.fromConfig(getConfig());
+        effectHandler = new EfficientEffectHandler(items, additionalSlotsToCheck);
     }
 
     private void startTask() {

@@ -5,7 +5,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public enum ConfigConstant {
     REFRESH_RATE("refresh-rate"),
-    APPLICABLE_ITEMS("applicable-items");
+    APPLICABLE_ITEMS("applicable-items"),
+    ADDITIONAL_SLOTS("additional-slots");
 
     private final String path;
 

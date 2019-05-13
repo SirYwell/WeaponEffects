@@ -11,32 +11,31 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EfficientEffectHandler implements EffectHandler<EfficientEffect> {
     private static final String WEAPON_EFFECTS_ARRAY = "WeaponEffects";
     private EnumSet<Material> materialsToCheck;
+    private List<Integer> additionalSlotsToCheck;
 
-    public EfficientEffectHandler(EnumSet<Material> materialsToCheck) {
+    public EfficientEffectHandler(EnumSet<Material> materialsToCheck, List<Integer> additionalSlotsToCheck) {
         this.materialsToCheck = materialsToCheck;
+        this.additionalSlotsToCheck = additionalSlotsToCheck;
     }
 
     @Override
     public void updateEffects(Player player) {
         ItemStack inHand = player.getInventory().getItemInMainHand();
         if (inHand != null && materialsToCheck.contains(inHand.getType())) {
-            NBTItem item = new NBTItem(inHand);
-            if (!item.hasKey(WEAPON_EFFECTS_ARRAY)) {
-                return;
-            }
-            int[] effects = item.getIntArray(WEAPON_EFFECTS_ARRAY);
-            for (int effect : effects) {
-                EfficientEffect.fromInt(effect)
-                        .toPotionEffect()
-                        .ifPresent(player::addPotionEffect);
-            }
+            updateEffect(player, inHand);
         }
+        additionalSlotsToCheck.stream()
+                .map(i -> player.getInventory().getItem(i))
+                .filter(Objects::nonNull)
+                .forEach(item -> updateEffect(player, item));
     }
 
     @Override
@@ -94,5 +93,17 @@ public class EfficientEffectHandler implements EffectHandler<EfficientEffect> {
                 .collect(Collectors.toSet()));
     }
 
+    private void updateEffect(Player player, ItemStack stack) {
+        NBTItem item = new NBTItem(stack);
+        if (!item.hasKey(WEAPON_EFFECTS_ARRAY)) {
+            return;
+        }
+        int[] effects = item.getIntArray(WEAPON_EFFECTS_ARRAY);
+        for (int effect : effects) {
+            EfficientEffect.fromInt(effect)
+                    .toPotionEffect()
+                    .ifPresent(player::addPotionEffect);
+        }
+    }
 
 }
