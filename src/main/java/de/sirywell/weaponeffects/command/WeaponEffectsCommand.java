@@ -22,6 +22,7 @@ import java.util.Set;
 @CommandAlias("weaponeffects|weffects|weffect")
 @CommandPermission("weaponeffects.command")
 public class WeaponEffectsCommand extends BaseCommand {
+    private static final int SECONDS_TO_TICKS_MULTIPLIER = 20;
     private EffectHandler<?> effectHandler;
     private Messages messages;
 
@@ -64,8 +65,8 @@ public class WeaponEffectsCommand extends BaseCommand {
         if (!hasValidItem(player)) {
             return;
         }
-        ItemStack result = effectHandler.addEffect(type, amplifier, duration, ambient, particles, icon,
-                player.getInventory().getItemInMainHand());
+        ItemStack result = effectHandler.addEffect(type, amplifier, duration * SECONDS_TO_TICKS_MULTIPLIER, ambient,
+                particles, icon, player.getInventory().getItemInMainHand());
         boolean success = player.getInventory().getItemInMainHand() != result;
         if (success) {
             player.getInventory().setItemInMainHand(result);
