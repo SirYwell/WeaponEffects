@@ -80,7 +80,7 @@ public class WeaponEffectsCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandPermission("weaponeffects.command.remove")
     @Description("Removes the specified effect from the item in your hand.")
-    public void removeFfect(Player player, WeaponEffectType type) {
+    public void removeEffect(Player player, WeaponEffectType type) {
         if (!hasValidItem(player)) {
             return;
         }
