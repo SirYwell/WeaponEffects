@@ -29,7 +29,7 @@ public class EfficientEffectHandler implements EffectHandler<EfficientEffect> {
     @Override
     public void updateEffects(Player player) {
         ItemStack inHand = player.getInventory().getItemInMainHand();
-        if (inHand != null && materialsToCheck.contains(inHand.getType())) {
+        if (materialsToCheck.contains(inHand.getType())) {
             updateEffect(player, inHand);
         }
         additionalSlotsToCheck.stream()
