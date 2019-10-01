@@ -19,18 +19,25 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class WeaponEffects extends JavaPlugin {
     private static final int TICKS_PER_SECOND = 20;
     private static final String MESSAGES_FILE_NAME = "messages.yml";
+    private static Logger LOGGER;
     private EffectHandler effectHandler;
     private BukkitTask weaponEffectBukkitTask;
     private Messages messages;
     private Settings settings;
 
+    public static Logger getPluginLogger() {
+        return LOGGER;
+    }
+
     @Override
     public void onEnable() {
+        LOGGER = getLogger();
         saveDefaultConfig();
         loadSettings();
         saveResource(MESSAGES_FILE_NAME, false);
@@ -84,24 +91,24 @@ public class WeaponEffects extends JavaPlugin {
     }
 
     private void startTask() {
-        Bukkit.getLogger().info("Starting weapon effect task...");
+        WeaponEffects.getPluginLogger().info("Starting weapon effect task...");
         int refreshRate = settings.getRefreshRate() * TICKS_PER_SECOND;
         weaponEffectBukkitTask = Bukkit.getScheduler()
                 .runTaskTimer(this, new WeaponEffectTask(effectHandler), 0, refreshRate);
-        Bukkit.getLogger().info("Started weapon effect task successfully.");
+        WeaponEffects.getPluginLogger().info("Started weapon effect task successfully.");
     }
 
     private void stopTask() {
-        Bukkit.getLogger().info("Stopping weapon effect task...");
+        WeaponEffects.getPluginLogger().info("Stopping weapon effect task...");
         weaponEffectBukkitTask.cancel();
-        Bukkit.getLogger().info("Stopped weapon effect task successfully.");
+        LOGGER.info("Stopped weapon effect task successfully.");
     }
 
     private void restartTask() {
-        Bukkit.getLogger().info("Restarting weapon effect task...");
+        LOGGER.info("Restarting weapon effect task...");
         stopTask();
         startTask();
-        Bukkit.getLogger().info("Restarted weapon effect task successfully.");
+        LOGGER.info("Restarted weapon effect task successfully.");
     }
 
 

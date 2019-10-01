@@ -1,6 +1,5 @@
 package de.sirywell.weaponeffects;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -32,14 +31,14 @@ public class Settings implements ConfigurationSerializable {
         STRING_TO_MATERIAL_CONVERTER = matName -> {
             Material mat = Material.getMaterial(matName);
             if (mat == null) {
-                Bukkit.getLogger().warning(
+                WeaponEffects.getPluginLogger().warning(
                         String.format("No material with name %s found. Ignoring it.", matName));
             }
             return mat;
         };
         ITEM_FILTER = material -> {
             if (!material.isItem()) {
-                Bukkit.getLogger().warning(
+                WeaponEffects.getPluginLogger().warning(
                         String.format("%s is not an item. Ignoring it.", material.name()));
                 return false;
             }
@@ -62,7 +61,7 @@ public class Settings implements ConfigurationSerializable {
         EnumSet<Material> applicableMaterials;
         if (applicableItems == null || applicableItems.isEmpty()) {
             if (!warned) { // why is this method even called twice...
-                Bukkit.getLogger().info("No applicable items were defined in config. Checking all items.");
+                WeaponEffects.getPluginLogger().info("No applicable items were defined in config. Checking all items.");
                 warned = true;
             }
             applicableMaterials = getAllItems();
