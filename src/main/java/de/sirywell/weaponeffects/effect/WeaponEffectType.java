@@ -31,9 +31,12 @@ public enum WeaponEffectType {
     GLOWING(PotionEffectType.GLOWING),
     LEVITATION(PotionEffectType.LEVITATION),
     LUCK(PotionEffectType.LUCK),
-    UNLUCK(PotionEffectType.UNLUCK)
-    // TODO add 1.14 effects
-    ;
+    BAD_LUCK(PotionEffectType.UNLUCK),
+    SLOW_FALLING(PotionEffectType.SLOW_FALLING),
+    CONDUIT_POWER(PotionEffectType.CONDUIT_POWER),
+    DOLPHINS_GRACE(PotionEffectType.DOLPHINS_GRACE),
+    BAD_OMEN(PotionEffectType.BAD_OMEN),
+    HERO_OF_THE_VILLAGE(PotionEffectType.HERO_OF_THE_VILLAGE);
 
     private PotionEffectType type;
 

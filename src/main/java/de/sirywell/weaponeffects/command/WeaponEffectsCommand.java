@@ -22,6 +22,7 @@ import java.util.Set;
 @CommandAlias("weaponeffects|weffects|weffect")
 @CommandPermission("weaponeffects.command")
 public class WeaponEffectsCommand extends BaseCommand {
+    private static final int SECONDS_TO_TICKS_MULTIPLIER = 20;
     private EffectHandler<?> effectHandler;
     private Messages messages;
 
@@ -64,8 +65,8 @@ public class WeaponEffectsCommand extends BaseCommand {
         if (!hasValidItem(player)) {
             return;
         }
-        ItemStack result = effectHandler.addEffect(type, amplifier, duration, ambient, particles, icon,
-                player.getInventory().getItemInMainHand());
+        ItemStack result = effectHandler.addEffect(type, amplifier, duration * SECONDS_TO_TICKS_MULTIPLIER, ambient,
+                particles, icon, player.getInventory().getItemInMainHand());
         boolean success = player.getInventory().getItemInMainHand() != result;
         if (success) {
             player.getInventory().setItemInMainHand(result);
@@ -79,7 +80,7 @@ public class WeaponEffectsCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandPermission("weaponeffects.command.remove")
     @Description("Removes the specified effect from the item in your hand.")
-    public void removeFfect(Player player, WeaponEffectType type) {
+    public void removeEffect(Player player, WeaponEffectType type) {
         if (!hasValidItem(player)) {
             return;
         }
